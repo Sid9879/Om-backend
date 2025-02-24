@@ -71,36 +71,37 @@ const cartDetails = async (req, res) => {
 };
 
 
+// app.post('/cart/subtract', async (req, res) => {
+//   const { userId, productId } = req.body;
+//   let cart = await Cart.findOne({ userId });
+//   if (cart) {
+//     const item = cart.items.find((item) => item.productId.toString() === productId);
+//     if (item && item.quantity > 1) {
+//       item.quantity -= 1;
+//     } else {
+//       cart.items = cart.items.filter((item) => item.productId.toString() !== productId);
+//     }
+//     await cart.save();
+//   }
+//   res.json(cart);
+// });
+
 const updateCart = async (req, res) => {
   const productId = req.params._productId;
   const {quantity} = req.body;
   const userId = req.user._id;
-
-  // console.log("Product ID:", productId, "Type:", typeof productId);
-  // console.log("Quantity:", quantity, "Type:", typeof quantity);
-  // console.log("User ID:", userId);
-
   try {
     let cart = await Cart.findOne({userId});
-    // console.log(cart)
-
-    if(cart){
-      const index = cart.items.findIndex(item=>item.productId.toString()===productId);
-      if(index>-1){
-        if(quantity<=0){
-          cart.items.splice(index,1);
+    if (cart) {
+          const item = cart.items.find((item) => item.productId.toString() === productId);
+          if (item && item.quantity > 1) {
+            item.quantity -= 1;
+          } else {
+            cart.items = cart.items.filter((item) => item.productId.toString() !== productId);
+          }
+          await cart.save();
         }
-        else{
-          cart.items[index].quantity=quantity;
-        }
-      }
-      await cart.save();
-      res.status(200).json({ msg: "Item updated", success: true, cart });
-
-    }
-    else{
-      res.status(401).json({msg:"card not found"})
-    }
+        res.json(cart);
   } catch (error) {
     res.status(500).json({msg:"error",error:error.message})
   }  
