@@ -71,21 +71,6 @@ const cartDetails = async (req, res) => {
 };
 
 
-// app.post('/cart/subtract', async (req, res) => {
-//   const { userId, productId } = req.body;
-//   let cart = await Cart.findOne({ userId });
-//   if (cart) {
-//     const item = cart.items.find((item) => item.productId.toString() === productId);
-//     if (item && item.quantity > 1) {
-//       item.quantity -= 1;
-//     } else {
-//       cart.items = cart.items.filter((item) => item.productId.toString() !== productId);
-//     }
-//     await cart.save();
-//   }
-//   res.json(cart);
-// });
-
 const updateCart = async (req, res) => {
   const productId = req.params._productId;
   const { quantity } = req.body;
