@@ -85,10 +85,6 @@ CartSchema.pre("save", function (next) {
     this.totalItems = this.items.reduce((sum, item) => sum + item.quantity, 0);
     this.totalPrice = this.items.reduce((sum, item) => sum + item.total, 0);
 
-//     const discountAmount = (this.discount / 100) * this.totalPrice;
-//   const taxAmount = (this.tax / 100) * this.totalPrice;
-
-//   this.totalPrice = this.totalPrice - discountAmount + taxAmount;
 
     next();
   });
