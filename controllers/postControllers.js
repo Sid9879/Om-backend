@@ -128,14 +128,23 @@ const getAll = async(req,res)=>{
 const searchUser = async (req,res)=>{
     let {q} = req.query;
    try {
-    if(q.length){
+    if (typeof q === 'string' && q.trim().length > 0){
         let regex = new RegExp(q,'i');
-        let products = await PostCollection.find({title:regex}).select(['title'])
-        res.json({msg:"fetched successfully",success:true,products});
-    }
-    else{
-        res.json({msg:"No search query",success:false})
-    }
+        let products = await PostCollection.find({
+            $or: [
+              { title: { $regex: queryRegex } }
+            ]
+          }).select(['title']);
+  
+          if (products.length > 0) {
+            return res.json({ msg: "product's found", success: true, books });
+          } else {
+            return res.json({ msg: "No products found", success: false, books: [] });
+          }
+        } else {
+          return res.json({ msg: "Empty search query", success: false });
+        }
+  
    } catch (error) {
     res.json({msg:"No search query",success:false,error:error.message})
     
