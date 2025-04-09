@@ -137,9 +137,9 @@ const searchUser = async (req,res)=>{
           }).select(['title']);
   
           if (products.length > 0) {
-            return res.json({ msg: "product's found", success: true, books });
+            return res.json({ msg: "product's found", success: true, products });
           } else {
-            return res.json({ msg: "No products found", success: false, books: [] });
+            return res.json({ msg: "No products found", success: false, products: [] });
           }
         } else {
           return res.json({ msg: "Empty search query", success: false });
