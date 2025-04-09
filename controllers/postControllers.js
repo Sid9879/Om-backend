@@ -129,7 +129,7 @@ const searchUser = async (req,res)=>{
     let {q} = req.query;
    try {
     if (typeof q === 'string' && q.trim().length > 0){
-        let regex = new RegExp(q,'i');
+        let queryRegex = new RegExp(q,'i');
         let products = await PostCollection.find({
             $or: [
               { title: { $regex: queryRegex } }
