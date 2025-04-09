@@ -151,6 +151,18 @@ const searchUser = async (req,res)=>{
    }
 }
 
+const findSingle = async (req,res)=>{
+    const postId = req.params._id;
+    try {
+        const fetchData = await PostCollection.findOne(userId);
+        res.status(200).json({msg:"post fetched",post:fetchData})
+    } catch (error) {
+        res.status(500).json({msg:"no product found",success:false,error:error.message})
+    }
+
+
+}
+
 module.exports = {
     createPost,
     getSeeds,
@@ -159,5 +171,6 @@ module.exports = {
     updatePost,
     deletePost,
     getAll,
-    searchUser
+    searchUser,
+    findSingle
 }
