@@ -154,7 +154,7 @@ const searchUser = async (req,res)=>{
 const findSingle = async (req,res)=>{
     const postId = req.params._id;
     try {
-        const fetchData = await PostCollection.findOne({postId});
+        const fetchData = await PostCollection.findById(postId);
         if(!fetchData){
             return res.status(404).json({msg:"No post found",success:false})
         }
