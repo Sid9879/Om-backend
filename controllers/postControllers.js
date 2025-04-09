@@ -134,7 +134,7 @@ const searchUser = async (req,res)=>{
             $or: [
               { title: { $regex: queryRegex } }
             ]
-          }).select(['title']);
+          }).select(['_id','title']);
   
           if (products.length > 0) {
             return res.json({ msg: "product's found", success: true, products });
