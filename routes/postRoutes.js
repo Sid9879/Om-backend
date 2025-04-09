@@ -10,7 +10,7 @@ router.get('/getPesticides',Pesticides);
 router.put('/update/:_id',checkToken,updatePost);
 router.delete('/delete/:_id',checkToken,deletePost);
 router.get('/getAll',getAll);
-router.get('search',searchUser)
+router.get('/search',searchUser)
 
 
 module.exports = router
