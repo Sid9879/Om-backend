@@ -125,7 +125,7 @@ const getAll = async(req,res)=>{
  }
 }
 
-const searchUser = async ()=>{
+const searchUser = async (req,res)=>{
     let {q} = req.query;
    try {
     if(q.length){
