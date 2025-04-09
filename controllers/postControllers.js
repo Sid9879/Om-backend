@@ -154,7 +154,7 @@ const searchUser = async (req,res)=>{
 const findSingle = async (req,res)=>{
     const postId = req.params._id;
     try {
-        const fetchData = await PostCollection.findOne(userId);
+        const fetchData = await PostCollection.findOne(postId);
         res.status(200).json({msg:"post fetched",post:fetchData})
     } catch (error) {
         res.status(500).json({msg:"no product found",success:false,error:error.message})
