@@ -5,7 +5,6 @@ const jwt = require('jsonwebtoken');
 let JWT_SECRET = process.env.JWT_SECRET;
 const validator = require('validator')
 let randomstring = require("randomstring");
-const checkToken = require('../middleware/checkToken');
 
 
 const registerUser = async (req, res) => {
@@ -42,7 +41,7 @@ const registerUser = async (req, res) => {
       name,
       email,
       phoneNumber,
-      password:hashedPassword, // This will be hashed in the pre-save hook
+      password:hashedPassword,
       address,
       profilePic,
     });

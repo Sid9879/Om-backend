@@ -1,6 +1,6 @@
 const PostCollection = require('../models/PostCollection');
 const UserCollection = require('../models/UserCollection');
-
+const{query} = require('express')
 const createPost = async (req,res)=>{
     const {title,description,price,category,image,size} = req.body;
     const userId = req.user._id;
@@ -34,7 +34,9 @@ const getSeeds = async(req,res)=>{
         const seeds = await PostCollection.find({category:"Seed"}).skip(Number(skip)).limit(Number(limit)).sort({createdAt:-1});;
         const totalCount = await PostCollection.countDocuments()
         // console.log(totalCount)
+       if(seeds.length>0){
         res.status(200).json({msg:"Products fetched",success:true,seeds,totalPage:Math.ceil(totalCount/limit),totalItems:totalCount});
+       }
     } catch (error) {
         res.status(500).json({msg:"error in fetching"})
     }
@@ -123,6 +125,23 @@ const getAll = async(req,res)=>{
  }
 }
 
+const searchUser = async ()=>{
+    let {q} = req.query;
+   try {
+    if(q.length){
+        let regex = new RegExp(q,'i');
+        let products = await PostCollection.find({title:regex}).select(['title'])
+        res.json({msg:"fetched successfully",success:true,products});
+    }
+    else{
+        res.json({msg:"No search query",success:false})
+    }
+   } catch (error) {
+    res.json({msg:"No search query",success:false,error:error.message})
+    
+   }
+}
+
 module.exports = {
     createPost,
     getSeeds,
@@ -130,5 +149,6 @@ module.exports = {
     Pesticides,
     updatePost,
     deletePost,
-    getAll
+    getAll,
+    searchUser
 }
