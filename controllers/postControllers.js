@@ -32,7 +32,7 @@ const getSeeds = async(req,res)=>{
     const skip = (page-1)*limit
     try {
         const seeds = await PostCollection.find({category:"Seed"}).skip(Number(skip)).limit(Number(limit)).sort({createdAt:-1});;
-        const totalCount = await PostCollection.countDocuments()
+        const totalCount = await PostCollection.countDocuments({ category: "Seed" })
         // console.log(totalCount)
        if(seeds.length>0){
         res.status(200).json({msg:"Products fetched",success:true,seeds,totalPage:Math.ceil(totalCount/limit),totalItems:totalCount});
@@ -47,7 +47,7 @@ const fertilizers =async(req,res)=>{
     const skip = (page-1)*limit
     try {
         let fertilizers = await PostCollection.find({category:"Fertilizer"}).skip(Number(skip)).limit(Number(limit)).sort({createdAt:-1});;
-        const totalCount = await PostCollection.countDocuments()
+        const totalCount = await PostCollection.countDocuments({ category: "Fertilizer" })
         if(fertilizers.length>0){
             res.status(200).json({msg:"fertilizer fetched",success:true,fertilizers,totalPage:Math.ceil(totalCount/limit),totalItems:totalCount})
         }
@@ -64,7 +64,7 @@ const Pesticides = async(req,res)=>{
     const skip = (page-1)*limit
     try {
         let Pesticides = await PostCollection.find({category:"Pesticide"}).skip(Number(skip)).limit(Number(limit)).sort({createdAt:-1});;
-    const totalCount = await PostCollection.countDocuments()
+    const totalCount = await PostCollection.countDocuments({category:"Pesticide"})
         if(Pesticides.length>0){
             res.status(200).json({msg:"Pesticides fetched",success:true,Pesticides,totalPage:Math.ceil(totalCount/limit),totalItems:totalCount});
         }
