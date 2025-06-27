@@ -1,85 +1,146 @@
-Om-backend 🕉️🛒💻
-Welcome to Om-backend! This repository hosts the backend services for an application, likely an e-commerce or content management system, given its routes for users, posts, and carts. Built with Node.js and Express.js, it provides a robust API for managing application data and handling user interactions.
+# 🔱 Om Backend – Fullstack Role-Based Project API 🔧
 
-✨ Features
-User Management: Handles user registration, authentication, and profiles. 👤
+The **Om Backend** is a robust Node.js + Express-based API server designed with modular architecture and role-based access.  
+It provides powerful features such as user authentication, admin/employee segregation, and RESTful APIs for scalable frontend integrations.
 
-Post Management: Supports creation, retrieval, updating, and deletion of posts (e.g.product listings). 📝
+━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+📌 PROJECT FEATURES  
+━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Cart Functionality: Manages shopping cart operations for users. 🛒
+✅ JWT Authentication (Login/Register)  
+🔐 Role-based Access Control (Admin, Employee)  
+📦 Product Management (Add, Update, Delete)  
+🧾 Sales Reporting with Quantity Control  
+👥 Customer Management (Add/View)  
+📂 Well-structured MVC with Controllers, Routes, and Middlewares  
+🌐 CORS-enabled for frontend integration  
 
-MongoDB Integration: Utilizes MongoDB as the database with Mongoose for object data modeling. 🍃
+━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+🧱 TECH STACK  
+━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-CORS Enabled: Allows cross-origin requests for seamless frontend integration. 🔗
+- Node.js (Runtime)  
+- Express.js (Server Framework)  
+- MongoDB (Database)  
+- Mongoose (ODM)  
+- JSON Web Token (Authentication)  
+- dotenv (Environment Config)  
 
-Environment Variable Configuration: Securely manages sensitive information like database credentials. 🛡️
+━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+📁 PROJECT STRUCTURE  
+━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Centralized Database Connection: Ensures consistent database connectivity. ⚡
+Om-backend/  
+├── controllers/         → Business logic  
+│   ├── authController.js  
+│   ├── productController.js  
+│   ├── customerController.js  
+│   └── saleController.js  
+├── middleware/          → Token & Role Check  
+│   └── authMiddleware.js  
+├── models/              → Mongoose Schemas  
+│   ├── User.js  
+│   ├── Product.js  
+│   ├── Customer.js  
+│   └── Sale.js  
+├── routes/              → Route Definitions  
+│   ├── authRoutes.js  
+│   ├── productRoutes.js  
+│   ├── customerRoutes.js  
+│   └── saleRoutes.js  
+├── db.js                → MongoDB Connection  
+├── index.js             → Entry point of server  
+├── .env                 → Environment config  
+└── package.json         → Project metadata  
 
-🚀 Technologies Used
-This project leverages a modern JavaScript stack to deliver a scalable and efficient backend:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+⚙️ SETUP INSTRUCTIONS  
+━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Node.js: JavaScript runtime environment. ⚙️
+Step 1: Clone the Repository  
+git clone https://github.com/Sid9879/Om-backend.git  
+cd Om-backend  
 
-Express.js: Fast, unopinionated, minimalist web framework for Node.js. 🌐
+Step 2: Install Dependencies  
+npm install  
 
-MongoDB Atlas (Cloud Database): For robust and scalable database hosting. ☁️
+Step 3: Create `.env` File  
+PORT=8080  
+MONGO_URL=your_mongodb_uri  
+JWT_SECRET=your_secret_key  
 
-Mongoose: ODM (Object Data Modeling) library for MongoDB and Node.js, simplifying database interactions. 🌿
+Step 4: Start the Server  
+node index.js  
 
-dotenv: To load environment variables from a .env file. 🔑
+✅ The server will start at: http://localhost:8080  
 
-cors: Middleware for enabling Cross-Origin Resource Sharing. 🤝
+━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+📡 API ROUTES OVERVIEW  
+━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-🛠️ Installation & Setup
-Follow these steps to get your development environment set up and run the Om-backend locally:
+🔐 AUTHENTICATION ROUTES  
+Method: POST | Route: /api/auth/register → Register a new user  
+Method: POST | Route: /api/auth/login → Login user and get JWT  
 
-Clone the repository:
+👥 USER MANAGEMENT (Admin Only)  
+Method: GET | Route: /api/user → Get all users  
 
-git clone https://github.com/Sid9879/Om-backend.git
-cd Om-backend
+📦 PRODUCT MANAGEMENT (Admin Only)  
+POST   /api/product           → Add a product  
+GET    /api/product           → Get all products  
+PUT    /api/product/:id       → Update product by ID  
+DELETE /api/product/:id       → Delete product by ID  
 
-Install dependencies:
+🧍 CUSTOMER MANAGEMENT (Admin & Employee)  
+POST   /api/customer          → Add a customer  
+GET    /api/customer          → View all customers  
 
-npm install
+💰 SALE MANAGEMENT (Admin & Employee)  
+POST   /api/sale              → Create new sale record  
+GET    /api/sale              → View all sale records  
 
-Set up environment variables:
-Create a .env file in the root directory and add your MongoDB Atlas connection details:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+🔐 AUTH & MIDDLEWARES  
+━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-API_KEY=YOUR_MONGODB_USERNAME
-API_PASSWORD=YOUR_MONGODB_PASSWORD
-PORT=8090
+- `verifyToken`: Verifies the JWT token.  
+- `verifyAdmin`: Allows only Admins.  
+- `verifyEmployeeOrAdmin`: Allows both roles.  
 
-Replace YOUR_MONGODB_USERNAME and YOUR_MONGODB_PASSWORD with your actual MongoDB Atlas credentials. The PORT is optional if you want to change the default port.
+Example usage in routes:  
+router.post("/sale", verifyEmployeeOrAdmin, addSale);  
 
-Run the application:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+📂 SAMPLE .env FILE  
+━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-node index.js
+PORT=8080  
+MONGO_URL=mongodb://localhost:27017/om_backend  
+JWT_SECRET=mystrongsecret  
 
-The server should now be running on http://localhost:8090 (or the port you specified in .env). You will see a "Connected to database online" message in your console if the database connection is successful.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+✨ FUTURE ENHANCEMENTS  
+━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-📚 Project Structure
-The project is organized into logical directories for maintainability and scalability:
+- 🧑 User Profile View/Edit  
+- 📊 Sales Analytics Dashboard  
+- 🧾 PDF Export for Reports  
+- 🔔 Notification System  
 
-./controllers: Contains the business logic and request handlers for different API routes.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+👨‍💻 AUTHOR  
+━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-./middleware: Houses custom Express middleware functions (e.g., authentication, error handling).
+**Siddharth Singh**  
+GitHub: https://github.com/Sid9879  
 
-./models: Defines the Mongoose schemas for MongoDB collections (e.g., User, Post, Cart).
+━━━━━━━━━━━━━━━━━━━━━━━━━━━  
 
-./routes: Sets up the API endpoints and maps them to their respective controller functions.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+🙏 CLOSING NOTE  
+━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-./db.js: Handles the MongoDB database connection.
+A clean, secure, and scalable backend built for modern apps.  
+Perfect for admin panels, sales dashboards, or enterprise portals.  
 
-./index.js: The main entry point of the application, responsible for server setup, database connection, and route registration.
-
-⚙️ API Endpoints
-The backend exposes the following primary API routes:
-
-/users: For user-related operations.
-
-/posts: For managing application posts.
-
-/carts: For handling shopping cart actions.
-
-(Specific endpoints like GET /users, POST /users/register, GET /posts/:id, POST /carts/add would be defined within the respective route files.)
+🔱 Jai Shree Ram 🔱
